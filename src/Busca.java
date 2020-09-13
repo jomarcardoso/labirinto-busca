@@ -23,15 +23,45 @@ public class Busca {
   }
 
   static boolean ehVizinhoDoFinal(Vector<Posicao> expansao, Posicao posicaoFinal) {
-    Iterator<Posicao> expansaoIt = expansao.iterator();
+    Iterator<Posicao> expansaoIterator = expansao.iterator();
 
-		while (expansaoIt.hasNext()) {
-      Posicao p = (Posicao) expansaoIt.next();
-      boolean vizinho = p.comparaCom(posicaoFinal);
+		while (expansaoIterator.hasNext()) {
+      Posicao expansaoItem = (Posicao) expansaoIterator.next();
+      boolean vizinho = expansaoItem.comparaCom(posicaoFinal);
 
       if (vizinho) return true;
     }
 
     return false;
+  }
+
+  static Vector<Posicao> concatenaPosicoes(Vector<Posicao> Va, Vector<Posicao> Vb) {
+    Vector<Posicao> merge = new Vector<Posicao>();
+    merge.addAll(Va);
+    merge.addAll(Vb);
+
+    return merge;
+  }
+
+  static Vector<Posicao> concatenaPosicao(Vector<Posicao> Va, Posicao Vb) {
+    Vector<Posicao> merge = new Vector<Posicao>();
+    merge.addAll(Va);
+    merge.addElement(Vb);
+
+    return merge;
+  }
+
+  static Vector<Vector<Posicao>> gerarExtensoes(Vector<Posicao> posicoesPercorridas, Vector<Posicao> expansao) {
+    Iterator<Posicao> expansaoIterator = expansao.iterator();
+    Vector<Vector<Posicao>> extensoes = new Vector<Vector<Posicao>>();
+
+		while (expansaoIterator.hasNext()) {
+      Vector<Posicao> extensao = new Vector<Posicao>();
+      Posicao expansaoItem = (Posicao) expansaoIterator.next();
+      extensao = concatenaPosicao(posicoesPercorridas, expansaoItem);
+      extensoes.addElement(extensao);
+    }
+
+    return extensoes;
   }
 }
