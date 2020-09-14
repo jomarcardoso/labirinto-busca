@@ -5,69 +5,49 @@ import Labirinto.*;
 
 public class BuscaEmLargura extends Busca {
   BuscaEmLargura() {
-    Labirinto labirinto = this.criarLabirinto();
-    Vector<Posicao> caminho = this.buscar(labirinto);
+    this.criarLabirinto();
+    this.buscar();
 
-    System.out.print("\ncaminho: " + caminho.toString());
+    this.labirinto.print(null);
+    this.imprimirPosicaoInicial();
+    this.imprimirPosicaoSaida();
+    this.imprimirCaminho();
   }
 
-  Vector<Vector<Posicao>> buscarEmLargura(Vector<Vector<Posicao>> percorridos, Labirinto labirinto, Vector<Posicao> posicoesPassadas) {
-    // Vector<Vector<Posicao>> newPercorridos = percorridos.clone();
-    ListIterator<Vector<Posicao>> percorridosIterator = percorridos.listIterator();
+  void buscarEmLargura() {
+    ListIterator<Vector<Posicao>> percorridosIterator = this.percorridos.listIterator();
 
     while (percorridosIterator.hasNext()) {
       Vector<Posicao> percorrido = percorridosIterator.next();
-      Vector<Posicao> expansao = labirinto.getExpansao(percorrido.lastElement());
+      Posicao posicaoAtual = percorrido.lastElement();
+      Vector<Posicao> expansao = this.labirinto.getExpansao(posicaoAtual);
       percorridosIterator.remove();
-      posicoesPassadas = this.concatenaPosicoes(posicoesPassadas, percorrido);
+      this.posicoesPassadas.addElement(posicaoAtual);
 
-      if (this.ehVizinhoDoFinal(expansao, labirinto.getPosicaoSaida())) {
-        this.achouOFinal = true;
-      }
+      this.verificaESalvaCaminho(expansao, percorrido);
 
-      Vector<Vector<Posicao>> extensoes = this.gerarExtensoes(percorrido, expansao, posicoesPassadas);
+      Vector<Vector<Posicao>> extensoes = this.gerarExtensoes(percorrido, expansao);
       Iterator<Vector<Posicao>> extensoesIterator = extensoes.iterator();
 
       while (extensoesIterator.hasNext()) {
         Vector<Posicao> extensao = extensoesIterator.next();
         percorridosIterator.add(extensao);
-
-        // System.out.print("\nextensao: " + extensao);
       }
-
-      // System.out.print("\npercorridos: " + percorridos.toString());
     }
-
-    return percorridos;
   }
 
-  Vector<Posicao> buscar(Labirinto labirinto) {
-    Vector<Vector<Posicao>> percorridos = new Vector<Vector<Posicao>>();
+  void buscar() {
     Vector<Posicao> primeiroPercorrido = new Vector<Posicao>();
-    Posicao posicao = labirinto.getPosicaoEntrada();
+    Posicao posicao = this.labirinto.getPosicaoEntrada();
     primeiroPercorrido.add(posicao);
-    percorridos.add(primeiroPercorrido);
-
-    // boolean vizinhoDoFinal = this.ehVizinhoDoFinal(labirinto.getExpansao(labirinto.getPosicaoEntrada()), labirinto.getPosicaoSaida());
-
-    // if (vizinhoDoFinal) {
-    //   primeiroPercorrido.add(labirinto.getPosicaoSaida());
-
-    //   return primeiroPercorrido;
-    // }
-
-    Vector<Posicao> posicoesPassadas = new Vector<Posicao>();
+    this.percorridos.add(primeiroPercorrido);
 
     while(!this.achouOFinal) {
-      this.buscarEmLargura(percorridos, labirinto, posicoesPassadas);
-      this.buscarEmLargura(percorridos, labirinto, posicoesPassadas);
+      this.buscarEmLargura();
     }
-
-    return primeiroPercorrido;
   }
 
 	public static void main(String[] args) {
     new BuscaEmLargura();
-    // System.out.print("\ncaminho: " + caminho);
 	}
 }

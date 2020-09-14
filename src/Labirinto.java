@@ -2,7 +2,7 @@
 
 Labirinto is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or 
+the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
 
 Labirinto is distributed in the hope that it will be useful,
@@ -21,11 +21,11 @@ import java.lang.Math;
 
 /**
  * Classe que implementa o labirinto (problema) com funcionalidades de busca e
- * fornecimento de informações. As posições ocupadas, entrada e saída são 
+ * fornecimento de informações. As posições ocupadas, entrada e saída são
  * posicionadas aleatóriamente.
  */
 public class Labirinto{
-	
+
 	private int dimX;
 	private int dimY;
 	private int labirinto[][];
@@ -42,7 +42,7 @@ public class Labirinto{
 	 *
 	 * @param dimX Dimensão do labirinto em X.
 	 * @param dimY Dimensão do labirinto em Y.
-	 * @param txO Taxa percentual de ocupação do labirinto, pois as posições 
+	 * @param txO Taxa percentual de ocupação do labirinto, pois as posições
 	 * ocupadas, entrada e saída são posicionadas aleatóriamente.
 	 */
 	public Labirinto(int dimX, int dimY, int txO, boolean d){
@@ -86,7 +86,7 @@ public class Labirinto{
 	/**
 	 * Fornece um vetor de posições disponíveis no entorno de uma dada posição.
 	 *
-	 * @param p Posição a partir da qual serão identificadas as livres em seu 
+	 * @param p Posição a partir da qual serão identificadas as livres em seu
 	 * redor.
 	 * @return Vetor de posições livres para se movimentar.
 	 */
@@ -122,11 +122,11 @@ public class Labirinto{
 	/**
 	 * Imprime o labirinto marcando as posições fornecidas
 	 *
-	 * @param caminho Vetor de posições que devem ser marcadas na impressão do 
+	 * @param caminho Vetor de posições que devem ser marcadas na impressão do
 	 * labirinto.
 	 */
 	public void print(Posicao[] caminho){
-		
+
 		/* Imprime o Labirinto com o caminho */
 		System.out.print("      |");
 		for (int c = 0; c < dimY; c++)
@@ -147,7 +147,7 @@ public class Labirinto{
 						System.out.printf("  S |");
 				}
 				else {
-					boolean solucao = false;		       
+					boolean solucao = false;
 					if ( caminho != null){
 						for (int pc=0; pc<caminho.length; pc++)
 							if (caminho[pc].comparaCom(x,y)){
@@ -165,7 +165,7 @@ public class Labirinto{
 				System.out.printf("----|");
 			System.out.println();
 		}
-		
+
 		if (caminho != null) {
 			/* Imprime o caminho*/
 			for (int c = caminho.length - 1; c >= 0; c--) {
@@ -177,7 +177,7 @@ public class Labirinto{
 
 
 	/**
-	 * Fornece a distância em linha reta a partir do cálculo da hipotenusa 
+	 * Fornece a distância em linha reta a partir do cálculo da hipotenusa
 	 * entre duas posições do labirinto, o Teorema de Pitágoras.
 	 *
 	 * @param a Posição A.
