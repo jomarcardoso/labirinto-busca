@@ -3,26 +3,28 @@ import java.util.Vector;
 import Labirinto.*;
 
 public class Busca {
-  static Labirinto criarLabirinto() {
+  public boolean achouOFinal = false;
+
+  Labirinto criarLabirinto() {
 		boolean debug = false;
 		Labirinto labirinto  = new Labirinto(10, 10, 30, debug);
 
     labirinto.print(null);
-    Busca.imprimirPosicaoInicial(labirinto);
-    Busca.imprimirPosicaoSaida(labirinto);
+    this.imprimirPosicaoInicial(labirinto);
+    this.imprimirPosicaoSaida(labirinto);
 
     return labirinto;
   }
 
-  static void imprimirPosicaoInicial(Labirinto labirinto) {
+  void imprimirPosicaoInicial(Labirinto labirinto) {
     System.out.println("Posicao entrada: " + labirinto.getPosicaoEntrada());
   }
 
-  static void imprimirPosicaoSaida(Labirinto labirinto) {
+  void imprimirPosicaoSaida(Labirinto labirinto) {
     System.out.println("Posicao saida: " + labirinto.getPosicaoSaida());
   }
 
-  static boolean ehVizinhoDoFinal(Vector<Posicao> expansao, Posicao posicaoFinal) {
+  boolean ehVizinhoDoFinal(Vector<Posicao> expansao, Posicao posicaoFinal) {
     Iterator<Posicao> expansaoIterator = expansao.iterator();
 
 		while (expansaoIterator.hasNext()) {
@@ -35,7 +37,7 @@ public class Busca {
     return false;
   }
 
-  static Vector<Posicao> concatenaPosicoes(Vector<Posicao> Va, Vector<Posicao> Vb) {
+  Vector<Posicao> concatenaPosicoes(Vector<Posicao> Va, Vector<Posicao> Vb) {
     Vector<Posicao> merge = new Vector<Posicao>();
     merge.addAll(Va);
     merge.addAll(Vb);
@@ -43,7 +45,7 @@ public class Busca {
     return merge;
   }
 
-  static Vector<Posicao> concatenaPosicao(Vector<Posicao> Va, Posicao Vb) {
+  Vector<Posicao> adicionarPosicao(Vector<Posicao> Va, Posicao Vb) {
     Vector<Posicao> merge = new Vector<Posicao>();
     merge.addAll(Va);
     merge.addElement(Vb);
@@ -51,15 +53,18 @@ public class Busca {
     return merge;
   }
 
-  static Vector<Vector<Posicao>> gerarExtensoes(Vector<Posicao> posicoesPercorridas, Vector<Posicao> expansao) {
+  Vector<Vector<Posicao>> gerarExtensoes(Vector<Posicao> posicoesPercorridas, Vector<Posicao> expansao, Vector<Posicao> posicoesPassadas) {
     Iterator<Posicao> expansaoIterator = expansao.iterator();
     Vector<Vector<Posicao>> extensoes = new Vector<Vector<Posicao>>();
 
 		while (expansaoIterator.hasNext()) {
-      Vector<Posicao> extensao = new Vector<Posicao>();
       Posicao expansaoItem = (Posicao) expansaoIterator.next();
-      extensao = concatenaPosicao(posicoesPercorridas, expansaoItem);
-      extensoes.addElement(extensao);
+
+      if (!posicoesPassadas.contains(expansaoItem)) {
+        Vector<Posicao> extensao = new Vector<Posicao>();
+        extensao = adicionarPosicao(posicoesPercorridas, expansaoItem);
+        extensoes.addElement(extensao);
+      }
     }
 
     return extensoes;
