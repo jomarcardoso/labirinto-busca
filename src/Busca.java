@@ -3,12 +3,40 @@ import java.util.Arrays;
 import java.util.Vector;
 import Labirinto.*;
 
-public class Busca {
+abstract public class Busca {
   boolean achouOFinal = false;
   Labirinto labirinto = null;
   Vector<Posicao> posicoesPassadas = new Vector<Posicao>();
   Vector<Posicao> caminho = new Vector<Posicao>();
   Vector<Vector<Posicao>> percorridos = new Vector<Vector<Posicao>>();
+
+  Busca() {
+    this.criarLabirinto();
+    this.executar();
+
+    this.labirinto.print(null);
+    this.imprimirPosicaoInicial();
+    this.imprimirPosicaoSaida();
+    this.imprimirCaminho();
+  }
+
+  void executar() {
+    this.prepararBusca();
+    // int qtdVezesNadaEncontrado = 0;
+    // // int qtdNoCaminho = 0;
+    // // int qtdPosicoesPassadas = 0;
+
+    while(!this.achouOFinal) {
+      this.buscar();
+
+      // if (qtdPosicoesPassadas == this.posicoesPassadas.length()) {
+
+      // }
+    }
+  }
+
+  abstract void prepararBusca();
+  abstract void buscar();
 
   void criarLabirinto() {
 		boolean debug = false;
