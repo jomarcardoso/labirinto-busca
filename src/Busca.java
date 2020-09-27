@@ -6,9 +6,9 @@ import Labirinto.*;
 abstract public class Busca {
   boolean achouOFinal = false;
   Labirinto labirinto = null;
-  Vector<Posicao> posicoesPassadas = new Vector<Posicao>();
+  Vector<Posicao> percorridos = new Vector<Posicao>();
   Vector<Posicao> caminho = new Vector<Posicao>();
-  Vector<Vector<Posicao>> percorridos = new Vector<Vector<Posicao>>();
+  Vector<Vector<Posicao>> caminhos = new Vector<Vector<Posicao>>();
 
   Busca() {
     this.criarLabirinto();
@@ -24,12 +24,12 @@ abstract public class Busca {
     this.prepararBusca();
     // int qtdVezesNadaEncontrado = 0;
     // // int qtdNoCaminho = 0;
-    // // int qtdPosicoesPassadas = 0;
+    // // int qtdpercorridos = 0;
 
     while(!this.achouOFinal) {
       this.buscar();
 
-      // if (qtdPosicoesPassadas == this.posicoesPassadas.length()) {
+      // if (qtdpercorridos == this.percorridos.length()) {
 
       // }
     }
@@ -96,10 +96,10 @@ abstract public class Busca {
   }
 
   boolean ehUmaPosicaoPercorrida(Posicao posicao) {
-    Iterator<Posicao> posicoesPassadasIterator = this.posicoesPassadas.iterator();
+    Iterator<Posicao> percorridosIterator = this.percorridos.iterator();
 
-    while (posicoesPassadasIterator.hasNext()) {
-      Posicao posicaoPassada = (Posicao) posicoesPassadasIterator.next();
+    while (percorridosIterator.hasNext()) {
+      Posicao posicaoPassada = (Posicao) percorridosIterator.next();
 
       if (posicaoPassada.comparaCom(posicao)) return true;
     }

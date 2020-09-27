@@ -8,18 +8,18 @@ public class BuscaEmLargura extends Busca {
     Vector<Posicao> primeiroPercorrido = new Vector<Posicao>();
     Posicao posicao = this.labirinto.getPosicaoEntrada();
     primeiroPercorrido.add(posicao);
-    this.percorridos.add(primeiroPercorrido);
+    this.caminhos.add(primeiroPercorrido);
   }
 
   void buscar() {
-    ListIterator<Vector<Posicao>> percorridosIterator = this.percorridos.listIterator();
+    ListIterator<Vector<Posicao>> caminhosIterator = this.caminhos.listIterator();
 
-    while (percorridosIterator.hasNext()) {
-      Vector<Posicao> percorrido = percorridosIterator.next();
+    while (caminhosIterator.hasNext()) {
+      Vector<Posicao> percorrido = caminhosIterator.next();
       Posicao posicaoAtual = percorrido.lastElement();
       Vector<Posicao> expansao = this.labirinto.getExpansao(posicaoAtual);
-      percorridosIterator.remove();
-      this.posicoesPassadas.addElement(posicaoAtual);
+      caminhosIterator.remove();
+      this.percorridos.addElement(posicaoAtual);
 
       this.verificaESalvaCaminho(expansao, percorrido);
 
@@ -28,7 +28,7 @@ public class BuscaEmLargura extends Busca {
 
       while (extensoesIterator.hasNext()) {
         Vector<Posicao> extensao = extensoesIterator.next();
-        percorridosIterator.add(extensao);
+        caminhosIterator.add(extensao);
       }
     }
   }
