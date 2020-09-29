@@ -35,7 +35,13 @@ abstract public class Busca {
     }
   }
 
-  abstract void prepararBusca();
+  void prepararBusca() {
+    Vector<Posicao> primeiroPercorrido = new Vector<Posicao>();
+    Posicao posicao = this.labirinto.getPosicaoEntrada();
+    primeiroPercorrido.add(posicao);
+    this.caminhos.add(primeiroPercorrido);
+  }
+
   abstract void buscar();
 
   void criarLabirinto() {

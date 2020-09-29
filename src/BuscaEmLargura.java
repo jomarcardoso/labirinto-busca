@@ -4,13 +4,6 @@ import java.util.Vector;
 import Labirinto.*;
 
 public class BuscaEmLargura extends Busca {
-  void prepararBusca() {
-    Vector<Posicao> primeiroPercorrido = new Vector<Posicao>();
-    Posicao posicao = this.labirinto.getPosicaoEntrada();
-    primeiroPercorrido.add(posicao);
-    this.caminhos.add(primeiroPercorrido);
-  }
-
   void buscar() {
     ListIterator<Vector<Posicao>> caminhosIterator = this.caminhos.listIterator();
 
