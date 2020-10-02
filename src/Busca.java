@@ -6,9 +6,9 @@ import Labirinto.*;
 abstract public class Busca {
   boolean achouOFinal = false;
   Labirinto labirinto = null;
-  Vector<Posicao> percorridos = new Vector<Posicao>();
-  Vector<Posicao> caminho = new Vector<Posicao>();
-  Vector<Vector<Posicao>> caminhos = new Vector<Vector<Posicao>>();
+  Vector<Posicao> percorridos = new Vector<Posicao>(); // lista do que já foi passado para evitar loops
+  Vector<Posicao> caminho = new Vector<Posicao>(); // o caminho correto
+  Vector<Vector<Posicao>> caminhos = new Vector<Vector<Posicao>>(); // grafo de caminhos
 
   Busca() {
     this.criarLabirinto();
@@ -22,16 +22,9 @@ abstract public class Busca {
 
   void executar() {
     this.prepararBusca();
-    // int qtdVezesNadaEncontrado = 0;
-    // // int qtdNoCaminho = 0;
-    // // int qtdpercorridos = 0;
 
     while(!this.achouOFinal) {
       this.buscar();
-
-      // if (qtdpercorridos == this.percorridos.length()) {
-
-      // }
     }
   }
 
@@ -78,9 +71,14 @@ abstract public class Busca {
   }
 
   void verificaESalvaCaminho(Vector<Posicao> expansao, Vector<Posicao> percorrido) {
+    // verifico se uma das expansões é o final
     if (this.ehVizinhoDoFinal(expansao, this.labirinto.getPosicaoSaida())) {
       this.achouOFinal = true;
+
+      // o caminho certo é o que já foi percorri
       this.caminho = percorrido;
+
+      // + a posição final
       this.caminho.add(this.labirinto.getPosicaoSaida());
     }
   }
@@ -111,22 +109,5 @@ abstract public class Busca {
     }
 
     return false;
-  }
-
-  Vector<Vector<Posicao>> gerarExtensoes(Vector<Posicao> posicoesPercorridas, Vector<Posicao> expansao) {
-    Iterator<Posicao> expansaoIterator = expansao.iterator();
-    Vector<Vector<Posicao>> extensoes = new Vector<Vector<Posicao>>();
-
-		while (expansaoIterator.hasNext()) {
-      Posicao expansaoItem = (Posicao) expansaoIterator.next();
-
-      if (!ehUmaPosicaoPercorrida(expansaoItem)) {
-        Vector<Posicao> extensao = new Vector<Posicao>();
-        extensao = adicionarPosicao(posicoesPercorridas, expansaoItem);
-        extensoes.addElement(extensao);
-      }
-    }
-
-    return extensoes;
   }
 }
